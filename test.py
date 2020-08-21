@@ -32,21 +32,29 @@ print("Đăng nhập thành công OK")
 cookies = login_req.cookies
 
 code_class = f.readline()
-code_class = code_class[0:12] + "$0.0$" + code_class[0:14] + "$$0|"
+code_class = code_class.split("|")
 type_class = f.readline()
-register_payload = {'Hide': code_class, 'acceptConflict': 'false',
-                    'classStudyUnitConflictId': '', 'RegistType': type_class}
-while True:
-    register = s.get(URL + "DangKyHocPhan/DangKy",
-                     params=register_payload, timeout=60)
-    if register.status_code == 200:
-        if "Đăng ký thành công" in register.text:
-            print(register.json()["Msg"] + code_class + "OK")
-            break
+type_class = type_class.split("|")
+register_payload = {'Hide': '', 'acceptConflict': 'false',
+                    'classStudyUnitConflictId': '', 'RegistType': ''}
+for i in range(len(code_class)):
+    temp_register_payload = register_payload
+    temp_register_payload["Hide"] = code_class[i][0:14] + \
+        "$0.0$" + code_class[i][0:12] + "$$0|"
+    temp_register_payload["RegistType"] = type_class[i]
+    print(temp_register_payload)
+    while True:
+        register = s.get(URL + "DangKyHocPhan/DangKy",
+                         params=temp_register_payload, timeout=60)
+        print(register.url)
+        if register.status_code == 200:
+            if "Đăng ký thành công" in register.text:
+                print(register.json()["Msg"] + code_class + "OK")
+                break
+            else:
+                print("Gặp lỗi đang thử lại", register.status_code)
         else:
             print("Gặp lỗi đang thử lại", register.status_code)
-    else:
-        print("Gặp lỗi đang thử lại", register.status_code)
-    time.sleep(1)
+        time.sleep(1)
 
-#print("Đã đăng kí xong OK")
+print("Đã đăng kí xong OK")

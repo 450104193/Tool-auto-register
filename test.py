@@ -82,9 +82,10 @@ for i in range(len(code_class)):
 
 print("Đã đăng kí xong OK,", error, "học phần đã full,",
       success, "học phần thành công")
-print("Các học phần thất bại: ")
+print("Các học phần thất bại:", end=' ')
 for i in fall:
-    print(i[0:14])
-print("Các học phần thành công: ")
+    print(i[0:14], end=' ')
+print("")
+print("Các học phần thành công:", end=' ')
 for i in right:
-    print(i[0:14])
+    print(i[0:14], end=' ')

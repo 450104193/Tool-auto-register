@@ -42,11 +42,11 @@ for i in range(len(code_class)):
     temp_register_payload["Hide"] = code_class[i][0:14] + \
         "$0.0$" + code_class[i][0:12] + "$$0|"
     temp_register_payload["RegistType"] = type_class[i]
-    print(temp_register_payload)
+    # print(temp_register_payload)
     while True:
         register = s.get(URL + "DangKyHocPhan/DangKy",
                          params=temp_register_payload, timeout=60)
-        print(register.url)
+        # print(register.url)
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text:
                 print(register.json()["Msg"] + code_class + "OK")

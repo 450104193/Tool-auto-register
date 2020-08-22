@@ -49,10 +49,10 @@ for i in range(len(code_class)):
         # print(register.url)
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text:
-                print(register.json()["Msg"] + code_class + "OK")
+                print(register.json()[4] + code_class + "OK")
                 break
             else:
-                print("Gặp lỗi đang thử lại", register.status_code)
+                print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
         else:
             print("Gặp lỗi đang thử lại", register.status_code)
         time.sleep(1)

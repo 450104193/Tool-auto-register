@@ -19,6 +19,11 @@ login_payload = {
     'password': password,
 }
 
+error = 0
+# Hoc phan dang ki that bai
+success = 0
+# Hoc phan dang ki thanh cong
+
 while True:
     login_req = s.post(URL + LOGIN_ROUTE, headers=HEADERS, data=login_payload)
     time.sleep(time_refresh_login)
@@ -46,20 +51,28 @@ for i in range(len(code_class)):
     while True:
         register = s.get(URL + "DangKyHocPhan/DangKy",
                          params=temp_register_payload, timeout=60)
-        print(register.url)
+        # print(register.url)
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text:
-                print(register.json()[4] + code_class + "OK")
+                print("Đăng ký thành công học phần" +
+                      code_class[i][0:14] + "OK")
+                success += 1
                 break
             elif "Trùng lịch:" in register.json()['Msg']:
                 temp_register_payload['acceptConflict'] = 'true'
                 temp_register_payload['classStudyUnitConflictId'] = code_class[i][0:14]
                 temp_register_payload['RegistType'] = ''
-                print("Gặp lỗi đang thử lại!!", register.json())
+                print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
+            elif "đủ số lượng" in register.text:
+                print(
+                    "Học phần đủ số lượng, chuyển qua đăng kí học phần khác!!")
+                error += 1
+                break
             else:
-                print("Gặp lỗi đang thử lại!!", register.json())
+                print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
         else:
             print("Gặp lỗi đang thử lại", register.status_code)
         time.sleep(1)
 
-print("Đã đăng kí xong OK")
+print("Đã đăng kí xong OK,", error, "học phần đã full,",
+      success, "học phần thành công")

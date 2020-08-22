@@ -21,8 +21,10 @@ login_payload = {
 
 error = 0
 # Hoc phan dang ki that bai
+fall = []
 success = 0
 # Hoc phan dang ki thanh cong
+right = []
 
 while True:
     login_req = s.post(URL + LOGIN_ROUTE, headers=HEADERS, data=login_payload)
@@ -59,6 +61,7 @@ for i in range(len(code_class)):
                 print("Đăng ký thành công học phần " +
                       code_class[i][0:14] + " OK")
                 success += 1
+                right.append(code_class[i])
                 break
             elif "Trùng lịch:" in register.json()['Msg']:
                 temp_register_payload['acceptConflict'] = 'true'
@@ -69,6 +72,7 @@ for i in range(len(code_class)):
                 print(
                     "Học phần đủ số lượng, chuyển qua đăng kí học phần khác!!")
                 error += 1
+                fall.append(code_class[i])
                 break
             else:
                 print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
@@ -78,3 +82,9 @@ for i in range(len(code_class)):
 
 print("Đã đăng kí xong OK,", error, "học phần đã full,",
       success, "học phần thành công")
+print("Các học phần thất bại: ")
+for i in fall:
+    print(i[0:14])
+print("Các học phần thành công: ")
+for i in right:
+    print(i[0:14])

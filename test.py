@@ -42,11 +42,13 @@ type_class = f.readline()
 type_class = type_class.split("|")
 register_payload = {'Hide': '', 'acceptConflict': 'false',
                     'classStudyUnitConflictId': '', 'RegistType': ''}
+
+
 for i in range(len(code_class)):
     temp_register_payload = register_payload
     temp_register_payload["Hide"] = code_class[i][0:14] + \
         "$0.0$" + code_class[i][0:12] + "$$0|"
-    temp_register_payload["RegistType"] = type_class[i]
+    # temp_register_payload["RegistType"] = type_class[i]
     # print(temp_register_payload)
     while True:
         register = s.get(URL + "DangKyHocPhan/DangKy",
@@ -54,14 +56,14 @@ for i in range(len(code_class)):
         # print(register.url)
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text or "Lớp học phần này đã đăng ký" in register.text:
-                print("Đăng ký thành công học phần" +
+                print("Đăng ký thành công học phần " +
                       code_class[i][0:14] + " OK")
                 success += 1
                 break
             elif "Trùng lịch:" in register.json()['Msg']:
                 temp_register_payload['acceptConflict'] = 'true'
                 temp_register_payload['classStudyUnitConflictId'] = code_class[i][0:14]
-                temp_register_payload['RegistType'] = ''
+                # temp_register_payload['RegistType'] = ''
                 print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
             elif "đủ số lượng" in register.text:
                 print(

@@ -53,7 +53,7 @@ for i in range(len(code_class)):
                          params=temp_register_payload, timeout=60)
         # print(register.url)
         if register.status_code == 200:
-            if "Đăng ký thành công" in register.text:
+            if "Đăng ký thành công" in register.text or "Lớp học phần này đã đăng ký" in register.text:
                 print("Đăng ký thành công học phần" +
                       code_class[i][0:14] + " OK")
                 success += 1

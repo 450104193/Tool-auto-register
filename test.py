@@ -46,13 +46,18 @@ for i in range(len(code_class)):
     while True:
         register = s.get(URL + "DangKyHocPhan/DangKy",
                          params=temp_register_payload, timeout=60)
-        # print(register.url)
+        print(register.url)
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text:
                 print(register.json()[4] + code_class + "OK")
                 break
+            elif "Trùng lịch:" in register.json()['Msg']:
+                temp_register_payload['acceptConflict'] = 'true'
+                temp_register_payload['classStudyUnitConflictId'] = code_class[i][0:14]
+                temp_register_payload['RegistType'] = ''
+                print("Gặp lỗi đang thử lại!!", register.json())
             else:
-                print("Gặp lỗi đang thử lại!!", register.json()['Msg'])
+                print("Gặp lỗi đang thử lại!!", register.json())
         else:
             print("Gặp lỗi đang thử lại", register.status_code)
         time.sleep(1)

@@ -55,7 +55,7 @@ for i in range(len(code_class)):
         if register.status_code == 200:
             if "Đăng ký thành công" in register.text:
                 print("Đăng ký thành công học phần" +
-                      code_class[i][0:14] + "OK")
+                      code_class[i][0:14] + " OK")
                 success += 1
                 break
             elif "Trùng lịch:" in register.json()['Msg']:

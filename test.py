@@ -8,7 +8,7 @@ LOGIN_ROUTE = 'Login/'
 HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:79.0) Gecko/20100101 Firefox/79.0',
            'origin': URL, 'referer': URL + LOGIN_ROUTE}
 
-time_refresh_login = 1
+time_refresh_login = 0
 f = open("codeclass.txt", "r")
 username = f.readline()
 password = f.readline()

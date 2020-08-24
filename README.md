@@ -11,3 +11,6 @@
 <p>Ví dụ:</p>
 <p>2011POLI200541|2011PHYL241226|2011COMP120702|2011COMP101807</p>
 <p>B4: chạy file test.py để thực hiện đăng kí tự động.</p>
+
+### Run
+    python3 test.py

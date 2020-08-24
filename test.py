@@ -34,15 +34,17 @@ while True:
     time.sleep(time_refresh_login)
     if login_req.status_code != 200:
         print("Gặp lỗi chưa đăng nhập được", login_req.status_code)
-    elif not "Chưa đến thời hạn đăng ký học phần" in login_req.text:
-        break
-    else:
+    elif "Chưa đến thời hạn đăng ký học phần" in login_req.text:
         print("Chưa đến thời hạn đăng ký học phần", login_req.status_code)
-if "không đúng" in login_req.text:
-    print("Sai tài khoản, mật khẩu! Vui lòng update lại trong file codeclass.txt")
-    exit()
-else:
-    print("Đăng nhập thành công OK")
+    elif "Đăng xuất" in login_req.text:
+        break
+    elif "không đúng" in login_req.text:
+        print("Sai tài khoản, mật khẩu! Vui lòng update lại trong file codeclass.txt")
+        exit()
+    else:
+        print("Gặp lỗi đang thử lại", login_req.status_code)
+
+print("Đăng nhập thành công OK")
 cookies = login_req.cookies
 # luu cookies dang nhap
 

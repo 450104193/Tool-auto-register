@@ -4,6 +4,10 @@
 - requests.
 - json.
 - time.
+
+Command:
+
+    pip install beautifulsoup4 requests json time
 ### Guide
 <p>B1: Điền MSSV vào dòng 1 file codeclass.txt</p>
 <p>B2: Điền Mật khẩu vào dòng 2 file codeclass.txt</p>

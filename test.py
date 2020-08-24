@@ -38,8 +38,11 @@ while True:
         break
     else:
         print("Chưa đến thời hạn đăng ký học phần", login_req.status_code)
-print("Đăng nhập thành công OK")
-
+if "không đúng" in login_req.text:
+    print("Sai tài khoản, mật khẩu! Vui lòng update lại trong file codeclass.txt")
+    exit()
+else:
+    print("Đăng nhập thành công OK")
 cookies = login_req.cookies
 # luu cookies dang nhap
 
